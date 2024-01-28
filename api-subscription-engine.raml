@@ -1,0 +1,37 @@
+#%RAML 1.0
+---
+title: Recurrence recovery API
+baseUri: https://{environment}/v1/subscription-engine
+baseUriParameters:
+  environment:
+    description: Staging, Production
+    enum: ["https://api-subscription-engine.buildstaging.com","api-subscription-engine.hotmart.com"]
+/recovery-recurrence:
+  description: Get recurrence recovery metrics
+  /metrics:
+    description: Get recovery metrics by seller
+    get:
+      responses:
+        200:
+          body: 
+            application/json:
+            type: SubscriptionRecoveryMetricsVO
+  /send:
+    description: Process recurrence recovery by seller
+    post:
+      body:
+        application/json:
+          type: string[]
+          example:
+            value:
+              [WHATSAPP, EMAIL]
+types:
+  SubscriptionRecoveryMetricsVO:
+    type: object
+    properties:
+      recoverableRecurrences: number
+      recoveryInProgress: number
+      recoveredRecurrences: number
+      totalAmountRecovered: string
+      notifications: string[]
+      userCanProcessRecovery: boolean

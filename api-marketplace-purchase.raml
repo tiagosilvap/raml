@@ -1,0 +1,64 @@
+#%RAML 1.0
+---
+title: Reports API
+baseUri: https://{environment}/reports/rest/v1
+baseUriParameters:
+  environment:
+    description: Staging, Production
+    enum: ["https://api-report.buildstaging.com","https://api-rpt-vlc.hotmart.com:443"]
+/subscribers:
+  description: Subscription reports
+  get:
+    queryParameters: 
+      page: 
+        displayName: Start release date
+        type: number
+        description: Start range date release
+        example: 1
+        required: true
+      rows: 
+        displayName: Final release date
+        type: number
+        description: Final range date release
+        example: 10
+        required: true
+      accessionDate: 
+        displayName: Final release date
+        type: number
+        description: Final range date release
+        example: 1662606000000
+        required: true
+      endAccessionDate: 
+        displayName: Final release date
+        type: number
+        description: Final range date release
+        example: 1662606000000
+        required: true
+      status: 
+        displayName: Final release date
+        type: string
+        description: Final range date release
+        example: DELAYED
+        required: true
+    responses:
+      200:
+        body: 
+          application/json:
+          type: ResultData
+  /count/status/{status}:
+    description: Get total number of subscriptions by status = [DELAYED]
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+            type: number
+types:
+  ResultData:
+    type: object
+    properties:
+      data: SubscriptionResponseVO[]
+      size: number
+      page: number
+  SubscriptionResponseVO:
+    type: object
